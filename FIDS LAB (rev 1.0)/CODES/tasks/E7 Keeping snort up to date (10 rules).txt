@@ -1,0 +1,29 @@
+# Rule 1: Detect a port scan
+alert tcp any any -> any 1:1024 (flags: S; msg:"Port scan detected"; sid:1000001;)
+
+# Rule 2: Detect a ping scan
+alert icmp any any -> any any (icmp-type:8; msg:"Ping sweep detected"; sid:1000002;)
+
+# Rule 3: Detect a SYN flood attack
+alert tcp any any -> $HOME_NET any (flags:S; threshold: type both, track by_src, count 10, seconds 60; msg:"SYN flood detected"; sid:1000003;)
+
+# Rule 4: Detecting a buffer overflow attack
+alert tcp any any -> $HOME_NET 80 (msg:"Buffer overflow attack detected"; content:"|90 90 90 90|"; offset:0; depth:4; sid:1000004;)
+
+# Rule 5: Detecting a SQL injection attack
+alert tcp any any -> $HOME_NET 80 (msg:"SQL injection attack detected"; content:"' or '1'='1"; sid:1000005;)
+
+# Rule 6: Detecting a cross-site scripting attack
+alert tcp any any -> $HOME_NET 80 (msg:"Cross-site scripting attack detected"; content:"<script>"; sid:1000006;)
+
+# Rule 7: Detecting a directory traversal attack
+alert tcp any any -> $HOME_NET 80 (msg:"Directory traversal attack detected"; content:"../.."; sid:1000007;)
+
+# Rule 8: Detecting a brute force attack
+alert tcp any any -> $HOME_NET 22 (msg:"Brute force attack detected"; content:"Failed password for root from"; sid:1000008;)
+
+# Rule 9: Detecting an SSH connection attempt
+alert tcp any any -> $HOME_NET 22 (msg:"SSH connection attempt detected"; content:"SSH-2.0-OpenSSH_7.9p1 Debian-10+deb10u2"; sid:1000009;)
+
+# Rule 10: Detecting an FTP connection attempt
+alert tcp any any -> $HOME_NET 21 (msg:"FTP connection attempt detected"; content:"220 ProFTPD Server"; sid:1000010;)

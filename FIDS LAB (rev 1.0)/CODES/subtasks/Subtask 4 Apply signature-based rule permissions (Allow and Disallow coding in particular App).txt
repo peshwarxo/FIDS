@@ -1,0 +1,53 @@
+class TabSwitchDetector:
+    def __init__(self):
+        self.current_tab = "Tab 1"
+        self.tab_rules = {
+            "Tab 1": ["Permission A", "Permission B"],
+            "Tab 2": ["Permission C"],
+            "Tab 3": ["Permission D"],
+        }
+
+    def switch_tab(self, new_tab):
+        if new_tab in self.tab_rules:
+            if self.check_permissions(new_tab):
+                print(f"Switched to {new_tab}")
+                self.current_tab = new_tab
+            else:
+                print("Permission denied for switching tabs.")
+        else:
+            print("Invalid tab name.")
+
+    def check_permissions(self, tab):
+        required_permissions = self.tab_rules[tab]
+        # Simulate permission checking logic
+        user_permissions = ["Permission A", "Permission B", "Permission C"]
+        return all(permission in user_permissions for permission in required_permissions)
+
+
+def main():
+    tab_switch_detector = TabSwitchDetector()
+
+    while True:
+        print("Current tab:", tab_switch_detector.current_tab)
+        print("Available tabs:", ", ".join(tab_switch_detector.tab_rules.keys()))
+        user_input = input("Enter the tab you want to switch to (or 'exit' to quit): ").strip()
+
+        if user_input.lower() == "exit":
+            break
+        else:
+            tab_switch_detector.switch_tab(user_input)
+
+if __name__ == "__main__":
+    main()
+
+
+
+OUTPUT 
+C:\Users\peshw\PycharmProjects\subtask4\venv\Scripts\python.exe C:\Users\peshw\PycharmProjects\subtask4\fids.py 
+Current tab: Tab 1
+Available tabs: Tab 1, Tab 2, Tab 3
+Enter the tab you want to switch to (or 'exit' to quit): Tab 1
+Switched to Tab 1
+Current tab: Tab 1
+Available tabs: Tab 1, Tab 2, Tab 3
+Enter the tab you want to switch to (or 'exit' to quit): 
